@@ -91,17 +91,20 @@ export default class BlogClient {
     showHidden = false,
   }: GetEveryPostLocaleProps): Promise<AllBlogPosts> {
     const response = await fetch(`${this.blogStaticUrl}/${POST_DATA_FILE}`)
-
-    const data: Record<string, BlogPost[]> = await response.json()
     const paginatedData = {} as AllBlogPosts
+    try {
+      const data: Record<string, BlogPost[]> = await response.json()
 
-    Object.keys(data).forEach((localeRoute) => {
-      const localeKey = localeRoute.replace('/', '') as RegisteredLocale
-      paginatedData[localeKey] = data[localeRoute]
-        .filter(({ hidden }) => showHidden || !hidden)
-        .filter(({ slug }) => slug !== excludedSlug)
-        .slice(0, pageSize)
-    })
+      Object.keys(data).forEach((localeRoute) => {
+        const localeKey = localeRoute.replace('/', '') as RegisteredLocale
+        paginatedData[localeKey] = data[localeRoute]
+          .filter(({ hidden }) => showHidden || !hidden)
+          .filter(({ slug }) => slug !== excludedSlug)
+          .slice(0, pageSize)
+      })
+    } catch (error) {
+      console.error(error)
+    }
 
     return paginatedData
   }

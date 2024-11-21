@@ -31,9 +31,13 @@ export default class AuctionsClient {
 
     endpoint.search = currentParams.toString()
 
-    const response = await fetch(endpoint.toString())
+    try {
+      return (await fetch(endpoint.toString())).json()
+    } catch (error) {
+      console.error(error)
+    }
 
-    return response.json()
+    return new Promise(() => null)
   }
 
   static async fetchHighlightedAuctions(): Promise<CharacterObject[]> {
@@ -118,8 +122,12 @@ export default class AuctionsClient {
 
     endpoint.search = currentParams.toString()
 
-    const response = await fetch(endpoint.toString())
+    try {
+      return (await fetch(endpoint.toString())).json()
+    } catch (error) {
+      console.error(error)
+    }
 
-    return response.json()
+    return new Promise(() => null)
   }
 }

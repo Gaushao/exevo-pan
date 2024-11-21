@@ -162,7 +162,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       rareItemData,
       initialPaginatedData,
       highlightedAuctions,
-      blogPosts: localizedBlogPosts[locale as RegisteredLocale],
+      blogPosts: localizedBlogPosts[locale as RegisteredLocale] || [],
       tibiaTradeItems: tibiaTradeResponse.items.slice(0, 4),
       badTibiaTradeIds: tibiaTradeResponse.badIds.join(','),
     },

@@ -32,8 +32,14 @@ export default class DrawerFieldsClient {
   }
 
   static async fetchAuctionedItemOptions(): Promise<RareItemData> {
-    const response = await fetch(this.rareItemDataUrl)
-    const data: RareItemData = await response.json()
+    let data: RareItemData = {}
+    try {
+      const response = await fetch(this.rareItemDataUrl)
+      data = await response.json()
+    } catch (error) {
+      console.error(error)
+    }
+
     return filterItemData(data)
   }
 }
